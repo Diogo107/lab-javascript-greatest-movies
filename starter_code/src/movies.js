@@ -123,24 +123,46 @@ const turnHoursToMinutes = array => {
 
 //function turnHoursToMinutes() {}
 // BONUS Iteration: Best yearly rate average - Best yearly rate average
-/*const bestYearAvg = array => {
+const bestYearAvg = array => {
+  if (array.length === 0) {
+    return null;
+  }
+
   const movieAverageRateByYear = array.reduce((accumulator, movie) => {
     const yearOfMovie = movie.year;
     const rateOfMovie = movie.rate;
 
-    if (typeof acuumulator [yearOfMovie] === 'undefined'){
-     accumulator [yearOfMovie] = [rateOfMovie];
+    if (typeof accumulator[yearOfMovie] === 'undefined') {
+      accumulator[yearOfMovie] = [rateOfMovie];
     } else {
-    acumulator [yearOfMovie].push(rateOfMovie);
+      accumulator[yearOfMovie].push(rateOfMovie);
     }
 
     return accumulator;
-  })
-}
+  }, {});
 
+  for (let year in movieAverageRateByYear) {
+    const averageRateOfYear = movieAverageRateByYear[year].reduce(
+      (accumulator, rate, index, originalArray) => accumulator + rate / originalArray.length,
+      0
+    );
+    movieAverageRateByYear[year] = averageRateOfYear;
+  }
 
-for (let year in movieAverageRateByYear) {
-  const movieAverageRateByYear = movieAverageRateByYear[year]..reduce(
-    (accumulator, rate, inderx, originalArray) => accumulator + rate/originalArray.length, 0
-  )
-}*/
+  const auxiliaryArray = Object.entries(movieAverageRateByYear);
+
+  auxiliaryArray.sort((a, b) => {
+    const rateOfYearA = a[1];
+    const rateOfYearB = b[1];
+    if (rateOfYearA > rateOfYearB) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
+
+  const year = auxiliaryArray[0][0];
+  const rate = auxiliaryArray[0][1];
+
+  return `The best year was ${year} with an average rate of ${rate}`;
+};
